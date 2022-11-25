@@ -4,7 +4,7 @@ import User from '../../models/UserModel'
 
 async function signinUser(req: Request, res: Response) {
   const {name, email, password} = req.body 
-  if (!name && !email && !password) return res.status(422).json({message: 'Missing data'})
+  if (!name || !email || !password) return res.status(422).json({message: 'Missing data'})
 
   const hash = encryptPassword(password)
 

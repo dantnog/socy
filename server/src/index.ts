@@ -5,7 +5,7 @@ import cookieParser from 'cookie-parser'
 import usersRoutes from './routes/users'
 
 
-const app = express()
+export const app = express()
 
 app.use(express.urlencoded({limit: '30mb', extended: true}))
 app.use(express.json())

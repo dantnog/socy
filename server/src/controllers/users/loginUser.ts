@@ -4,7 +4,7 @@ import User from '../../models/UserModel'
 
 async function loginUser(req: Request, res: Response) {
   const {email, password} = req.body 
-  if (!email && !password) return res.status(422).json({message: 'Missing data'})
+  if (!email || !password) return res.status(422).json({message: 'Missing data'})
 
   try {
     const user = await User.findOne({email})
