@@ -1,5 +1,6 @@
 import { Request, Response } from 'express'
 import comparePassword from '../../helpers/comparePassword'
+import generateToken from '../../helpers/generateToken'
 import User from '../../models/UserModel'
 
 async function loginUser(req: Request, res: Response) {
@@ -13,7 +14,10 @@ async function loginUser(req: Request, res: Response) {
     const passwordMatchs = comparePassword(password, user.password)
     if (!passwordMatchs) return res.status(403).json({message: 'Access denied'})
 
-    res.status(200).json(user)
+    user.password = ''
+    const token = generateToken(String(user._id))
+    res.cookie('jwt', token)
+    res.status(200).json({message: 'Logged in successfully', data: user})
   } catch(err) {
     console.log(err)
     res.status(500).json({message: 'Failed to login'})
