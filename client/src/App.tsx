@@ -1,5 +1,6 @@
 import { Routes, Route, Navigate } from 'react-router-dom'
 import { ToastContainer } from 'react-toastify'
+import Login from './pages/Login'
 import Signup from './pages/Signup'
 
 function App() {
@@ -8,7 +9,7 @@ function App() {
       <Routes>
         <Route path="/" element={ <div>WELCOME</div> } />
         <Route path="/home" element={ <div>HOME</div> } />
-        <Route path="/login" element={ <div>LOGIN</div> } />
+        <Route path="/login" element={ <Login /> } />
         <Route path="/signup" element={ <Signup /> } />
       </Routes>
       <ToastContainer></ToastContainer>
