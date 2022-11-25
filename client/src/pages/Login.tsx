@@ -3,6 +3,7 @@ import { Link } from "react-router-dom"
 import Button from "../components/Button"
 import Input from "../components/Input"
 import { useNavigate } from 'react-router-dom';
+import validateLogin from "../hooks/validateLogin";
 
 function Login() {
   const [email, setEmail] = useState('')
@@ -11,8 +12,8 @@ function Login() {
 
   async function handleSubmit(e: any) {
     e.preventDefault()
-/*     const res = await validateLogin({email, password})
-    if (!res) return */
+    const res = await validateLogin({email, password})
+    if (!res) return
     nav('/home')
   }
 
