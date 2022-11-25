@@ -1,5 +1,6 @@
 import { Request, Response } from 'express'
 import encryptPassword from '../../helpers/encryptPassword'
+import generateToken from '../../helpers/generateToken'
 import User from '../../models/UserModel'
 
 async function signupUser(req: Request, res: Response) {
@@ -10,6 +11,9 @@ async function signupUser(req: Request, res: Response) {
 
   try {
     const user = await User.create({name, email, password: hash})
+    user.password = ''
+    const token = generateToken(String(user._id))
+    res.cookie('jwt', token)
     res.status(201).json({message: 'Sign up complete', data: user})
   } catch(err) {
     console.log(err)

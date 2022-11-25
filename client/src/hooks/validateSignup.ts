@@ -1,21 +1,26 @@
 import { toast } from 'react-toastify' 
 import 'react-toastify/dist/ReactToastify.css'
+import signupUser from '../api/users/signupUser';
 import SignupProps from '../types/SignupProps';
 import { ToastConfig } from '../types/ToastProps';
 
-export default async function validateSignup({name, email, password, confirm}: SignupProps) {
+async function validateSignup({name, email, password, confirm}: SignupProps) {
   if (!name) return warning("Don't forget the name")
   if (!email) return warning("Don't forget the email")
   if (!password) return warning("Don't forget the password")
   if (!confirm) return warning("Don't forget the confirmation")
   if (password !== confirm) return warning("The passwords doesn't matches")
 
-  // todo api call
-  const res = apiSignup({name, email, password})
+  const res = await signupUser({name, email, password})
 
-  if (res.status === 201) success(res.message)
+  if (res.status === 201) { 
+    success(res.message) 
+    return true
+  }
   else if (res.status === 422) error(res.message)
   else if (res.status === 500) error(res.message)
+
+  return false
 }
 
 function success(m: string) {
@@ -27,3 +32,5 @@ function warning(m: string) {
 function error(m: string) {
   toast.error(m, ToastConfig)
 }
+
+export default validateSignup

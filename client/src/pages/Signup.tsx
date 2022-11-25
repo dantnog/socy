@@ -3,16 +3,20 @@ import { Link } from "react-router-dom"
 import Button from "../components/Button"
 import Input from "../components/Input"
 import validateSignup from "../hooks/validateSignup"
+import { useNavigate } from 'react-router-dom';
 
 function Signup() {
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [confirm, setConfirm] = useState('')
+  const nav = useNavigate()
 
-  function handleSubmit(e: any) {
+  async function handleSubmit(e: any) {
     e.preventDefault()
-    validateSignup({name, email, password, confirm})
+    const res = await validateSignup({name, email, password, confirm})
+    if (!res) return
+    nav('/home')
   }
 
   return (
