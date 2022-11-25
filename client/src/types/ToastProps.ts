@@ -1,6 +1,6 @@
 import { ToastPosition, Theme, ToastTransition, Flip } from 'react-toastify'
 
-interface ToastProps {
+type ToastProps = {
   position: ToastPosition
   autoClose: number
   pauseOnHover: boolean

@@ -2,6 +2,7 @@ import { useState } from "react"
 import { Link } from "react-router-dom"
 import Button from "../components/Button"
 import Input from "../components/Input"
+import validateSignup from "../hooks/validateSignup"
 
 function Signup() {
   const [name, setName] = useState('')
@@ -11,6 +12,7 @@ function Signup() {
 
   function handleSubmit(e: any) {
     e.preventDefault()
+    validateSignup({name, email, password, confirm})
   }
 
   return (

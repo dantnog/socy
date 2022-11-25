@@ -2,7 +2,7 @@ import { Request, Response } from 'express'
 import encryptPassword from '../../helpers/encryptPassword'
 import User from '../../models/UserModel'
 
-async function signinUser(req: Request, res: Response) {
+async function signupUser(req: Request, res: Response) {
   const {name, email, password} = req.body 
   if (!name || !email || !password) return res.status(422).json({message: 'Missing data'})
 
@@ -10,11 +10,11 @@ async function signinUser(req: Request, res: Response) {
 
   try {
     const user = await User.create({name, email, password: hash})
-    res.status(201).json(user)
+    res.status(201).json({message: 'Sign up complete', data: user})
   } catch(err) {
     console.log(err)
-    res.status(500).json({message: 'Failed to create user'})
+    res.status(500).json({message: 'Failed to signup\nTry again later'})
   }
 }
 
-export default signinUser
+export default signupUser

@@ -10,29 +10,29 @@ const agent = request.agent(app)
  *  SIGN IN
  * 
  */
-describe('User signin', () => {
+describe('User signup', () => {
   it('should create the user', async () => {
-    await agent.post('/users/signin')
+    await agent.post('/users/signup')
       .send({name: 'Test', email: 'test@test.com', password: 'test'})
       .expect(201)
   })
   it('should fail because of missing name', async () => {
-    await agent.post('/users/signin')
+    await agent.post('/users/signup')
       .send({name: '', email: 'test@test.com', password: 'test'})
       .expect(422)
   })
   it('should fail because of missing email', async () => {
-    await agent.post('/users/signin')
+    await agent.post('/users/signup')
       .send({name: 'Teste', email: '', password: 'test'})
       .expect(422)
   })
   it('should fail because of missing password', async () => {
-    await agent.post('/users/signin')
+    await agent.post('/users/signup')
       .send({name: 'Teste', email: 'test@test.com', password: ''})
       .expect(422)
   })
   it('should fail because already exists', async () => {
-    await agent.post('/users/signin')
+    await agent.post('/users/signup')
       .send({name: 'Test', email: 'test@test.com', password: 'test'})
       .expect(500)
   })
