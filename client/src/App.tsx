@@ -16,7 +16,7 @@ function App() {
     <UserProvider>
     <div className="w-screen min-h-screen bg-white dark:bg-gray-900 text-gray-600 dark:text-gray-400">
       <Routes>
-        <Route path="/" element={ !isLogged() ? <Welcome /> : <Navigate to="/home" /> } />
+        <Route path="/" element={ <Welcome /> } />
         <Route path="/home" element={ <Home /> } />
         <Route path="/login" element={ !isLogged() ? <Login /> : <Navigate to="/home" /> } />
         <Route path="/signup" element={ !isLogged() ? <Signup /> : <Navigate to="/home" /> } />

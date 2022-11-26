@@ -5,7 +5,6 @@ function reducer(state: any, action:any) {
       delete action.data.__v
       return {...action.data}
     case '':
-    case '':
     default:
       return
   }
