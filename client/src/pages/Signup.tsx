@@ -4,8 +4,10 @@ import Button from "../components/Button"
 import Input from "../components/Input"
 import validateSignup from "../hooks/validateSignup"
 import { useNavigate } from 'react-router-dom';
+import { useUserContext } from "../contexts/UserContext"
 
 function Signup() {
+  const {dispatch} = useUserContext()
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
@@ -15,7 +17,8 @@ function Signup() {
   async function handleSubmit(e: any) {
     e.preventDefault()
     const res = await validateSignup({name, email, password, confirm})
-    if (!res) return
+    if (!res?.data) return
+    dispatch({type: 'setUser', data: res.data})
     nav('/home')
   }
 

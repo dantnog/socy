@@ -1,20 +1,22 @@
 import { useRef } from "react"
 import Button from "../components/Button"
 import EditProfile from "../components/EditProfile"
+import { useUserContext } from "../contexts/UserContext"
 
 function LeftBar() {
+  const {state} = useUserContext()
+
   let form = useRef<any>(null)
   function toggleEditForm() {
     form.current?.classList.toggle('hidden')
   }
-
 
   return (
     <>
     <div className="space-y-4">
       <div className="flex place-items-center space-x-4 ">
         <img src="" alt="Picture" className="h-12 w-12 rounded-full overflow-hidden border-2" />
-        <h3 className="font-semibold truncate">Name</h3>
+        <h3 className="font-semibold truncate">{state?.name}</h3>
       </div>
       <div className="text-sm ">
         <div className="">

@@ -4,7 +4,7 @@ import host from '../host'
 
 
 async function signupUser({name, email, password}: SignupProps) {
-  let response = {status: 0, message: ''}
+  let response = {status: 0, message: '', data: {}}
 
   await axios.post(`${host}/users/signup`, {
     name,
@@ -14,9 +14,15 @@ async function signupUser({name, email, password}: SignupProps) {
   {
     withCredentials: true
   })
-    .then(res => response = {status: res.status, message: res.data.message})
+    .then(res => response = {
+      status: res.status,
+      message: res.data.message,
+      data: res.data.data
+      })
     .catch(err => response = {
-      status: err.response?.status, message: err.response?.data.message
+      status: err.response?.status, 
+      message: err.response?.data.message,
+      data: {}
     })
 
   return response

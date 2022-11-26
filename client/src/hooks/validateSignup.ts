@@ -13,14 +13,11 @@ async function validateSignup({name, email, password, confirm}: SignupProps) {
 
   const res = await signupUser({name, email, password})
 
-  if (res.status === 201) { 
-    success(res.message) 
-    return true
-  }
+  if (res.status === 201) success(res.message) 
   else if (res.status === 422) error(res.message)
   else if (res.status === 500) error(res.message)
 
-  return false
+  return res
 }
 
 function success(m: string) {

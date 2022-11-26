@@ -10,16 +10,13 @@ async function validateLogin({email, password}: LoginProps) {
 
   const res = await loginUser({email, password})
 
-  if (res.status === 200) { 
-    success(res.message) 
-    return true
-  }
+  if (res.status === 200) success(res.message) 
   else if (res.status === 403) error(res.message)
   else if (res.status === 404) error(res.message)
   else if (res.status === 422) error(res.message)
   else if (res.status === 500) error(res.message)
 
-  return false
+  return res
 }
 
 function success(m: string) {

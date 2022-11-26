@@ -4,7 +4,7 @@ import host from '../host'
 
 
 async function loginUser({email, password}: LoginProps) {
-  let response = {status: 0, message: ''}
+  let response = {status: 0, message: '', data: {}}
 
   await axios.post(`${host}/users/login`, {
     email,
@@ -13,9 +13,15 @@ async function loginUser({email, password}: LoginProps) {
   {
     withCredentials: true
   })
-    .then(res => response = {status: res.status, message: res.data.message})
+    .then(res => response = {
+      status: res.status, 
+      message: res.data.message,
+      data: res.data.data
+    })
     .catch(err => response = {
-      status: err.response?.status, message: err.response?.data.message
+      status: err.response?.status,
+      message: err.response?.data.message,
+      data: {}
     })
 
   return response
