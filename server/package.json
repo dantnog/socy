@@ -1,5 +1,5 @@
 {
-  "name": "server",
+  "name": "socy",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -9,8 +9,8 @@
     "dev": "tsnd --respawn src/index.ts"
   },
   "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "author": "Daniel Nogueira",
+  "license": "MIT",
   "dependencies": {
     "bcrypt": "^5.1.0",
     "cookie-parser": "^1.4.6",
