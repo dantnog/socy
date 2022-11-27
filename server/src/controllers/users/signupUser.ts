@@ -7,10 +7,16 @@ async function signupUser(req: Request, res: Response) {
   const {name, email, password} = req.body 
   if (!name || !email || !password) return res.status(422).json({message: 'Missing data'})
 
+  let toCreate: any = {}
+
   const hash = encryptPassword(password)
+  toCreate = {name, email, password: hash}
+
+  const image = req.file
+  if (image) toCreate['picture'] = image.filename
 
   try {
-    const user = await User.create({name, email, password: hash})
+    const user = await User.create(toCreate)
     user.password = ''
     const token = generateToken(String(user._id))
     res.cookie('jwt', token)

@@ -9,6 +9,7 @@ export const app = express()
 
 app.use(express.urlencoded({limit: '30mb', extended: true}))
 app.use(express.json())
+app.use(express.static('public'))
 app.use(cookieParser())
 app.use(cors())
 

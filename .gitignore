@@ -11,6 +11,7 @@ lerna-debug.log*
 */dist
 */dist-ssr
 */*.local
+server/public
 
 # Editor directories and files
 .vscode/*

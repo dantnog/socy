@@ -6,6 +6,7 @@ import validateSignup from "../hooks/validateSignup"
 import { useNavigate } from 'react-router-dom';
 import { useUserContext } from "../contexts/UserContext"
 import formReducer from "../reducers/FormReducer"
+import File from "../components/File"
 
 
 const formBase = {name: '', email: '', password: '', confirm: ''}
@@ -25,7 +26,7 @@ function Signup() {
 
   return (
     <div className="w-screen min-h-screen grid place-items-center">
-      <form onSubmit={handleSubmit} className="p-4 bg-white dark:bg-gray-900 flex flex-col space-y-4 rounded-lg">
+      <form onSubmit={handleSubmit} className="p-4 bg-white dark:bg-gray-900 flex flex-col space-y-4 rounded-lg" encType="mult">
         <h2 className="text-3xl my-2 text-yellow-300 dark:text-yellow-600 font-semibold">
           Sign up
         </h2>
@@ -37,6 +38,7 @@ function Signup() {
           value={form.password} onChange={formDispatch} />
         <Input name="confirm" type="password" placeholder="Confirm your password" 
           value={form.confirm} onChange={formDispatch} />
+        <File name="image" id="image" onChange={formDispatch} />
         <Button name="Sign up" type="submit" theme={1} />
         <Link to="/login"><Button name="Log in" type="button" theme={2} /></Link>
       </form>
