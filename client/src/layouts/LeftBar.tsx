@@ -4,6 +4,9 @@ import Button from "../components/Button"
 import EditProfile from "../components/EditProfile"
 import { useUserContext } from "../contexts/UserContext"
 import validateLogout from "../hooks/validateLogout"
+import { IoExitOutline, IoBookOutline } from 'react-icons/io5' 
+import { FiEdit } from 'react-icons/fi' 
+
 
 function LeftBar() {
   const {state} = useUserContext()
@@ -23,10 +26,14 @@ function LeftBar() {
   return (
     <>
     <div className="space-y-4">
-      <div className="flex place-items-center space-x-4 ">
-        <img src="" alt="Picture" className="h-12 w-12 rounded-full overflow-hidden border-2" />
-        <h3 className="font-semibold truncate">{state?.name}</h3>
-        <button onClick={logout} className="">O</button>
+      <div className="flex justify-between place-items-center">
+        <div className="flex place-items-center space-x-4">
+          <img src="" alt="Picture" className="h-12 w-12 rounded-full overflow-hidden border-2" />
+          <h3 className="font-semibold truncate">{state?.name}</h3>
+        </div>
+        <button onClick={logout} className="text-xl hover:text-red-500 hover:bg-gray-200 dark:bg-gray-700 rounded-md p-2 ml-auto">
+          <IoExitOutline />
+        </button>
       </div>
       <div className="text-sm ">
         <div className="">
@@ -39,9 +46,13 @@ function LeftBar() {
         </div>
       </div>
       <div className="flex rounded-md overflow-hidden">
-        <Button name="Edit" type="button" theme={3} onClick={toggleEditForm} />
+        <Button name="Edit" type="button" theme={3} onClick={toggleEditForm}>
+          <FiEdit className="mr-2"/>
+        </Button>
         <span className="bg-gray-200 dark:bg-gray-700 w-1"></span>
-        <Button name="My Posts" type="button" theme={3} />
+        <Button name="My Posts" type="button" theme={3} >
+          <IoBookOutline className="mr-2 text-lg"/>
+        </Button>
       </div>
 
       <div ref={form} className="hidden">
