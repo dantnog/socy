@@ -1,24 +1,25 @@
-import { useState } from "react"
+import { useReducer, useState } from "react"
 import { Link } from "react-router-dom"
 import Button from "../components/Button"
 import Input from "../components/Input"
 import validateSignup from "../hooks/validateSignup"
 import { useNavigate } from 'react-router-dom';
 import { useUserContext } from "../contexts/UserContext"
+import formReducer from "../reducers/FormReducer"
+
+
+const formBase = {name: '', email: '', password: '', confirm: ''}
 
 function Signup() {
   const {dispatch} = useUserContext()
-  const [name, setName] = useState('')
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
-  const [confirm, setConfirm] = useState('')
+  const [form, formDispatch] = useReducer(formReducer, formBase)
   const nav = useNavigate()
 
   async function handleSubmit(e: any) {
     e.preventDefault()
-    const res = await validateSignup({name, email, password, confirm})
+    const res = await validateSignup(form)
     if (!res?.data) return
-    dispatch({type: 'setUser', data: res.data})
+    dispatch({type: 'setUser', payload: res.data})
     nav('/home')
   }
 
@@ -28,10 +29,14 @@ function Signup() {
         <h2 className="text-3xl my-2 text-yellow-300 dark:text-yellow-600 font-semibold">
           Sign up
         </h2>
-        <Input name="name" type="text" placeholder="Your name" value={name} onChange={setName} />
-        <Input name="email" type="text" placeholder="Your email" value={email} onChange={setEmail} />
-        <Input name="password" type="password" placeholder="Your password" value={password} onChange={setPassword} />
-        <Input name="confirm" type="password" placeholder="Confirm your password" value={confirm} onChange={setConfirm} />
+        <Input name="name" type="text" placeholder="Your name" 
+          value={form.name} onChange={formDispatch} />
+        <Input name="email" type="text" placeholder="Your email" 
+          value={form.email} onChange={formDispatch} />
+        <Input name="password" type="password" placeholder="Your password" 
+          value={form.password} onChange={formDispatch} />
+        <Input name="confirm" type="password" placeholder="Confirm your password" 
+          value={form.confirm} onChange={formDispatch} />
         <Button name="Sign up" type="submit" theme={1} />
         <Link to="/login"><Button name="Log in" type="button" theme={2} /></Link>
       </form>

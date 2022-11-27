@@ -1,22 +1,25 @@
-import { useState } from "react"
+import { useReducer, useState } from "react"
 import { Link } from "react-router-dom"
 import Button from "../components/Button"
 import Input from "../components/Input"
 import { useNavigate } from 'react-router-dom';
 import validateLogin from "../hooks/validateLogin";
 import { useUserContext } from "../contexts/UserContext";
+import formReducer from "../reducers/FormReducer";
+
+
+const formBase = {email: '', password: ''}
 
 function Login() {
   const {dispatch} = useUserContext()
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
+  const [form, formDispatch] = useReducer(formReducer, formBase)
   const nav = useNavigate()
 
   async function handleSubmit(e: any) {
     e.preventDefault()
-    const res = await validateLogin({email, password})
+    const res = await validateLogin(form)
     if (!res?.data) return
-    dispatch({type: 'setUser', data: res.data})
+    dispatch({type: 'setUser', payload: res.data})
     nav('/home')
   }
 
@@ -26,8 +29,10 @@ function Login() {
         <h2 className="text-3xl my-2 text-yellow-300 dark:text-yellow-600 font-semibold">
           Log in
         </h2>
-        <Input name="email" type="text" placeholder="Your email" value={email} onChange={setEmail} />
-        <Input name="password" type="password" placeholder="Your password" value={password} onChange={setPassword} />
+        <Input name="email" type="text" placeholder="Your email" 
+          value={form.email} onChange={formDispatch} />
+        <Input name="password" type="password" placeholder="Your password" 
+          value={form.password} onChange={formDispatch} />
         <Button name="Log in" type="submit" theme={1} />
         <Link to="/signup"><Button name="Sign up" type="button" theme={2} /></Link>
       </form>

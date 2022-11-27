@@ -1,13 +1,13 @@
-function reducer(state: any, action:any) {
+function userReducer(state: any, action:any) {
   switch (action.type) {
     case 'setUser':
-      delete action.data.password
-      delete action.data.__v
-      return {...action.data}
+      delete action.payload.password
+      delete action.payload.__v
+      return {...action.payload}
     case '':
     default:
       return
   }
 }
 
-export default reducer
+export default userReducer

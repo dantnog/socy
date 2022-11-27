@@ -1,5 +1,5 @@
 import { createContext, ReactNode, useContext, useEffect, useReducer, useState } from "react";
-import reducer from "../reducers/UserReducer";
+import userReducer from "../reducers/UserReducer";
 import UserContextProps from "../types/UserContextProps";
 
 
@@ -17,7 +17,7 @@ function firstLoad() {
 
 
 export function UserProvider({children}: {children: ReactNode}) {
-  const [state, dispatch] = useReducer(reducer, firstLoad())
+  const [state, dispatch] = useReducer(userReducer, firstLoad())
 
   useEffect(() => {
     localStorage.setItem('user', JSON.stringify(state))

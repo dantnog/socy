@@ -50,7 +50,7 @@ function LeftBar() {
           <FiEdit className="mr-2"/>
         </Button>
         <span className="bg-gray-200 dark:bg-gray-700 w-1"></span>
-        <Button name="My Posts" type="button" theme={3} >
+        <Button name="Posts" type="button" theme={3} >
           <IoBookOutline className="mr-2 text-lg"/>
         </Button>
       </div>
