@@ -8,6 +8,10 @@ function formReducer(state: any, action: any) {
       return {...state, password: action.payload}
     case 'confirm':
       return {...state, confirm: action.payload}
+    case 'description':
+      return {...state, description: action.payload}
+    case 'location':
+      return {...state, location: action.payload}
     case 'image':
       return {...state, image: action.payload}
     default:

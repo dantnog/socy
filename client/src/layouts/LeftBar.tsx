@@ -6,6 +6,7 @@ import { useUserContext } from "../contexts/UserContext"
 import validateLogout from "../hooks/validateLogout"
 import { IoExitOutline, IoBookOutline } from 'react-icons/io5' 
 import { FiEdit } from 'react-icons/fi' 
+import host from "../api/host"
 
 
 function LeftBar() {
@@ -28,7 +29,7 @@ function LeftBar() {
     <div className="space-y-4">
       <div className="flex justify-between place-items-center">
         <div className="flex place-items-center space-x-4">
-          <img src="" alt="Picture" className="h-12 w-12 rounded-full overflow-hidden border-2" />
+          <img src={`${host}/users/${state?.picture}`} alt="Picture" className="h-12 w-12 rounded-full overflow-hidden border-2" />
           <h3 className="font-semibold truncate">{state?.name}</h3>
         </div>
         <button onClick={logout} className="text-xl hover:text-red-500 hover:bg-gray-200 dark:bg-gray-700 rounded-md p-2 ml-auto">
@@ -38,11 +39,11 @@ function LeftBar() {
       <div className="text-sm ">
         <div className="">
           <p className="">Description: </p>
-          <p className="pl-4">Anything...</p>
+          <p className="pl-4">{state.description || ''}</p>
         </div>
         <div className="">
           <p className="">Location: </p>
-          <p className="pl-4">Neverland, Somewhere</p>
+          <p className="pl-4">{state.location || ''}</p>
         </div>
       </div>
       <div className="flex rounded-md overflow-hidden">

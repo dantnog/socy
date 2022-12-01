@@ -9,7 +9,7 @@ import formReducer from "../reducers/FormReducer"
 import File from "../components/File"
 
 
-const formBase = {name: '', email: '', password: '', confirm: ''}
+const formBase = {name: '', email: '', password: '', confirm: '', image: undefined}
 
 function Signup() {
   const {dispatch} = useUserContext()
@@ -38,6 +38,7 @@ function Signup() {
           value={form.password} onChange={formDispatch} />
         <Input name="confirm" type="password" placeholder="Confirm your password" 
           value={form.confirm} onChange={formDispatch} />
+        <p>Profile picture</p>
         <File name="image" id="image" onChange={formDispatch} />
         <Button name="Sign up" type="submit" theme={1} />
         <Link to="/login"><Button name="Log in" type="button" theme={2} /></Link>
