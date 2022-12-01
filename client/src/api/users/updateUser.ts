@@ -14,7 +14,7 @@ async function updateUser({name, description, location, password, image}: Update
   password ? fd.append('password', password) : null
   image ? fd.append('image', image) : null
 
-  await axios.post(`${host}/users/update`, fd,
+  await axios.patch(`${host}/users/update`, fd,
   {
     withCredentials: true
   })

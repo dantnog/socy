@@ -29,10 +29,10 @@ function LeftBar() {
     <div className="space-y-4">
       <div className="flex justify-between place-items-center">
         <div className="flex place-items-center space-x-4">
-          <img src={`${host}/users/${state?.picture}`} alt="Picture" className="h-12 w-12 rounded-full overflow-hidden border-2" />
+          <img src={`${host}/users/${state?.picture}`} alt="Picture" className="h-12 w-12 rounded-full overflow-hidden bg-gray-100 dark:bg-gray-800" />
           <h3 className="font-semibold truncate">{state?.name}</h3>
         </div>
-        <button onClick={logout} className="text-xl hover:text-red-500 hover:bg-gray-200 dark:bg-gray-700 rounded-md p-2 ml-auto">
+        <button onClick={logout} className="text-xl hover:text-red-500 hover:bg-gray-200 hover:dark:bg-gray-800 rounded-md p-2 ml-auto">
           <IoExitOutline />
         </button>
       </div>
