@@ -4,7 +4,8 @@ function userReducer(state: any, action:any) {
       delete action.payload.password
       delete action.payload.__v
       return {...action.payload}
-    case '':
+    case 'clear':
+      return {logged: false}
     default:
       return
   }

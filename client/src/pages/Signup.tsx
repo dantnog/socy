@@ -21,6 +21,7 @@ function Signup() {
     const res = await validateSignup(form)
     if (!res?.data) return
     dispatch({type: 'setUser', payload: res.data})
+    formDispatch({type: 'clear'})
     nav('/home')
   }
 

@@ -10,12 +10,13 @@ import host from "../api/host"
 
 
 function LeftBar() {
-  const {state} = useUserContext()
+  const {state, dispatch} = useUserContext()
   const nav = useNavigate()
 
   async function logout() {
     const res = await validateLogout()
     if (res.status !== 200) return
+    dispatch({type: 'clear'})
     nav('/')
   }
 

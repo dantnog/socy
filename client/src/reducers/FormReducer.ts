@@ -14,6 +14,9 @@ function formReducer(state: any, action: any) {
       return {...state, location: action.payload}
     case 'image':
       return {...state, image: action.payload}
+    case 'clear':
+      return {name: '', email: '', password: '', confirm: '', description: '',
+        location: '', image: undefined}
     default:
       return state
   }

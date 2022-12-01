@@ -20,6 +20,7 @@ function Login() {
     const res = await validateLogin(form)
     if (!res?.data) return
     dispatch({type: 'setUser', payload: res.data})
+    formDispatch({type: 'clear'})
     nav('/home')
   }
 

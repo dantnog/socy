@@ -15,31 +15,37 @@ function EditProfile() {
   const {dispatch} = useUserContext()
   const [form, formDispatch] = useReducer(formReducer, formBase)
   const deleteForm = useRef<any>(null)
-  const editForm = useRef<any>(null)
+  const updateForm = useRef<any>(null)
   const nav = useNavigate()
 
-  async function handleSubmit(e: any) {
+  async function handleUpdate(e: any) {
     e.preventDefault()
     const res = await validateUpdateUser(form)
     if (!res?.data) return
     dispatch({type: 'setUser', payload: res.data})
+    clearInputs()
   }
 
   function switchForms() {
     deleteForm.current.classList.toggle('hidden')
-    editForm.current.classList.toggle('hidden')
+    updateForm.current.classList.toggle('hidden')
   }
 
   async function handleDelete(e: any) {
     e.preventDefault()
     const res = await validateDeleteUser()
     if (res.status !== 200) return  
+    clearInputs()
     nav('/')
+  }
+
+  function clearInputs() {
+    formDispatch({type: 'clear'})
   }
 
   return (
     <>
-    <form ref={editForm} onSubmit={handleSubmit} className="flex flex-col space-y-4" encType="mult">
+    <form ref={updateForm} onSubmit={handleUpdate} className="flex flex-col space-y-4" encType="mult">
       <div className="flex place-items-center justify-between">
         <h2 className="text-yellow-300 dark:text-yellow-600 font-semibold">
           Fill only what to edit
