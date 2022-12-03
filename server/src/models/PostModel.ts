@@ -2,7 +2,7 @@ import mongoose from '../db/conn'
 
 const schema = new mongoose.Schema({
   message: {type: String, required: true, min: 1, max: 200},
-  user_id: {type: String, required: true},
+  user_id: {type: mongoose.Types.ObjectId, required: true},
   likes: {type: Array, default: []},
   likesCount: {type: Number, default: 0}
 },

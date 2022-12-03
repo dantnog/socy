@@ -18,7 +18,7 @@ function Login() {
   async function handleSubmit(e: any) {
     e.preventDefault()
     const res = await validateLogin(form)
-    if (res.status !== 200) return
+    if (res?.status !== 200) return
     dispatch({type: 'setUser', payload: res.data})
     formDispatch({type: 'clear'})
     nav('/home')

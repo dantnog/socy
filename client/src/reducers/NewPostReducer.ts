@@ -1,4 +1,4 @@
-function postReducer(state: any, action: any) {
+function newPostReducer(state: any, action: any) {
   switch (action.type) {
     case 'message':
       return {message: action.payload}
@@ -9,4 +9,4 @@ function postReducer(state: any, action: any) {
   }
 }
 
-export default postReducer
+export default newPostReducer

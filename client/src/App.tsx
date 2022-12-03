@@ -1,5 +1,6 @@
 import { Routes, Route, Navigate } from 'react-router-dom'
 import { ToastContainer } from 'react-toastify'
+import { PostsProvider } from './contexts/PostsContext'
 import { UserProvider } from './contexts/UserContext'
 import Home from './pages/Home'
 import Login from './pages/Login'
@@ -14,6 +15,7 @@ function App() {
 
   return (
     <UserProvider>
+    <PostsProvider>
     <div className="w-screen min-h-screen bg-white dark:bg-gray-900 text-gray-600 dark:text-gray-400">
       <Routes>
         <Route path="/" element={ <Welcome /> } />
@@ -23,6 +25,7 @@ function App() {
       </Routes>
       <ToastContainer />
     </div>
+    </PostsProvider>
     </UserProvider>
   )
 }

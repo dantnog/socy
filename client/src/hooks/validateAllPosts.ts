@@ -1,18 +1,14 @@
 import { toast } from 'react-toastify' 
 import 'react-toastify/dist/ReactToastify.css'
 import { ToastConfig } from '../types/ToastProps';
-import PostProps from "../types/PostProps";
-import createPost from '../api/posts/createPost';
+import getAllPosts from '../api/posts/getAllPosts';
 
 
-async function validateNewPost({message}: PostProps) {
-	if (!message) return
+async function validateAllPosts() {
+  const res = await getAllPosts()
 
-  const res = await createPost({message})
-
-  if (res.status === 201) success(res.message) 
+  if (res.status === 200) success(res.message) 
   else if (res.status === 401) error(res.message)
-  else if (res.status === 422) error(res.message)
   else if (res.status === 500) error(res.message)
   
 	return res
@@ -25,4 +21,5 @@ function error(m: string) {
   toast.error(m, ToastConfig)
 }
 
-export default validateNewPost
+export default validateAllPosts
+
