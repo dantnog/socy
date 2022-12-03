@@ -19,7 +19,7 @@ function Signup() {
   async function handleSubmit(e: any) {
     e.preventDefault()
     const res = await validateSignup(form)
-    if (!res?.data) return
+    if (!res.status !== 201) return
     dispatch({type: 'setUser', payload: res.data})
     formDispatch({type: 'clear'})
     nav('/home')

@@ -14,6 +14,7 @@ async function validateSignup({name, email, password, confirm, image}: SignupPro
   const res = await signupUser({name, email, password, image})
 
   if (res.status === 201) success(res.message) 
+  else if (res.status === 400) error(res.message)
   else if (res.status === 422) error(res.message)
   else if (res.status === 500) error(res.message)
 

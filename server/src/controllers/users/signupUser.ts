@@ -15,6 +15,9 @@ async function signupUser(req: Request, res: Response) {
   const image = req.file
   if (image) toCreate['picture'] = image.filename
 
+  const userExists = await User.findOne({email: email})
+  if (userExists) return res.status(400).json({message: 'User already exists'})
+
   try {
     const user = await User.create(toCreate)
     user.password = ''
