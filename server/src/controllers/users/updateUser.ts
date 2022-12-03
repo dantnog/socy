@@ -1,6 +1,7 @@
 import { Request, Response } from 'express'
 import fs from 'fs'
 import encryptPassword from '../../helpers/encryptPassword'
+import deleteOldPicture from '../../helpers/deleteOldPicture'
 import User from '../../models/UserModel'
 
 async function updateUser(req: Request, res: Response) {
@@ -26,14 +27,6 @@ async function updateUser(req: Request, res: Response) {
   } catch(err) {
     console.log(err)
     res.status(500).json({message: 'Failed to update\nTry again later'})
-  }
-}
-
-function deleteOldPicture(picture?: string) {
-  try {
-    picture ? fs.unlinkSync(`public/users/${picture}`) : null
-  } catch(err) {
-    console.log(err)
   }
 }
 
