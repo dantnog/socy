@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
-import NewPost from '../components/NewPost'
 import { usePostsContext } from '../contexts/PostsContext'
 import host from "../api/host"
+import NewPost from '../components/NewPost'
 
 
 function CenterBar() {
@@ -16,7 +16,7 @@ function CenterBar() {
       <NewPost />
       <div className="">
       {
-        state?.map((item, index) => (
+        state?.map((item: any, index: any) => (
           <div key={index} className="p-4 space-y-4 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-md">
             <div className="flex space-x-4 place-items-center">
               <img src={`${host}/users/${item.owner[0]?.picture}`} alt="Picture" className="h-12 w-12 object-cover rounded-full overflow-hidden bg-gray-100 dark:bg-gray-800" />

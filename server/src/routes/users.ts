@@ -19,7 +19,7 @@ router.get('/logout', logoutUser)
 router.patch('/update', imageUpload.single('image'), auth, updateUser)
 router.delete('/delete', auth, deleteUser)
 router.post('/search', auth, searchUser)
-router.get('/fetchfollowing', auth, fetchFollowing)
+router.post('/fetchfollowing', auth, fetchFollowing)
 router.post('/setfollowing', auth, setFollowing)
 
 export default router

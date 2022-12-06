@@ -1,46 +1,36 @@
-import { useReducer, useState } from 'react'
+import { useEffect, useReducer } from 'react'
 import host from '../api/host'
 import { useUserContext } from '../contexts/UserContext'
-import validateSearch from '../hooks/validateSearch'
+import validateFetchFollowing from '../hooks/validateFetchFollowing'
 import validateSetFollow from '../hooks/validateSetFollow'
-import searchUsersReducer from '../reducers/SearchUsersReducer'
+import followingUsersReducer from '../reducers/FollowingUsersReducer'
 
 
 const Base: any = []
 
-function SearchUsers() {
-  const [stateSearch, dispatchSearch] = useReducer(searchUsersReducer, Base)
+function Following() {
+  const [stateFollowing, dispatchFollowing] = useReducer(followingUsersReducer, Base)
   const {state, dispatch} = useUserContext()
-  const [name, setName] = useState('')
-
+  
   async function handleFollowBtn(idToFollow: string) {
     const res = await validateSetFollow(idToFollow)
     if (res.status !== 200) return
     dispatch({type: 'updateList', payload: res.data})
   }
 
-  async function handleSubmit(e: any) {
-    e.preventDefault()
-    const res = await validateSearch(name)
+  async function fetchFollowing() {
+    const res = await validateFetchFollowing(state.followlist_id)
     if (res?.status !== 200) return
-    dispatchSearch({type: 'set', payload: res.data})
+    dispatchFollowing({type: 'set', payload: res.data})
   }
 
-
-  return(
+  useEffect(() => {fetchFollowing()}, [])
+  
+  
+  return (
     <>
-    <form onSubmit={handleSubmit} className="mb-4">
-      <input 
-        type="text" 
-        className="w-full bg-gray-100 py-1 px-2 dark:bg-gray-800 rounded-md outline-none
-        focus:ring-4 ring-yellow-300 dark:ring-yellow-600"
-        placeholder="Search by name" 
-        value={name} 
-        onChange={e => setName(e.target.value) } />
-    </form>
-
     { 
-    stateSearch && stateSearch.map((item, index) => (
+    stateFollowing && stateFollowing.map((item, index) => (
       <div key={index} className="flex justify-between place-items-center mb-4">
         <div className="flex place-items-center space-x-4">
           <img src={`${host}/users/${item?.picture}`} alt="Picture" className="h-12 w-12 object-cover rounded-full overflow-hidden bg-gray-100 dark:bg-gray-800" />
@@ -60,5 +50,4 @@ function SearchUsers() {
   )
 }
 
-export default SearchUsers
-
+export default Following

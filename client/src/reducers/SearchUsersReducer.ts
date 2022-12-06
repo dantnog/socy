@@ -1,4 +1,4 @@
-function othersUsersReducer(state: any, action:any) {
+function searchUsersReducer(state: any, action:any) {
   switch (action.type) {
     case 'set':
       return [...action.payload]
@@ -9,4 +9,4 @@ function othersUsersReducer(state: any, action:any) {
   }
 }
 
-export default othersUsersReducer
+export default searchUsersReducer
