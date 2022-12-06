@@ -1,5 +1,6 @@
 import LeftBar from "../layouts/LeftBar"
 import CenterBar from "../layouts/CenterBar"
+import RightBar from "../layouts/RightBar"
 
 function Home() {
   return (
@@ -10,7 +11,9 @@ function Home() {
       <div className="md:col-span-2">
         <CenterBar />
       </div>
-      <div className="hidden md:block">FRIENDS</div>
+      <div className="hidden md:block">
+        <RightBar />
+      </div>
     </div>
   )
 }
