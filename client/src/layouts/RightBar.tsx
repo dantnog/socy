@@ -1,4 +1,5 @@
 import { useRef } from "react"
+import { IoSearch } from "react-icons/io5"
 import Button from "../components/Button"
 import SearchUsers from "../components/SearchUsers"
 
@@ -17,7 +18,7 @@ function RightBar() {
       </h2>
       <div className="rounded-md overflow-hidden">
         <Button name="Search" type="button" theme={3} onClick={toggleSearch}>
-
+          <IoSearch className="mr-2 text-lg"/>
         </Button>
       </div>
       <div ref={search} className="hidden">

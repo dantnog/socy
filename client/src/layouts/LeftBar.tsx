@@ -7,6 +7,7 @@ import validateLogout from "../hooks/validateLogout"
 import { IoExitOutline, IoBookOutline } from 'react-icons/io5' 
 import { FiEdit } from 'react-icons/fi' 
 import host from "../api/host"
+import ChangeTheme from "../components/ChangeTheme"
 
 
 function LeftBar() {
@@ -55,6 +56,8 @@ function LeftBar() {
         <Button name="Posts" type="button" theme={3} >
           <IoBookOutline className="mr-2 text-lg"/>
         </Button>
+        <span className="bg-gray-200 dark:bg-gray-700 w-1"></span>
+        <ChangeTheme />
       </div>
 
       <div ref={form} className="hidden">
