@@ -5,6 +5,7 @@ import User from '../../models/UserModel'
 
 async function setFollowing(req: Request, res: Response) {
   const {idToFollow} = req.body
+  if (!idToFollow) return res.status(422).json({message: 'Missing data'})
 
   try {
     const user = await User.findById(req.headers.userId)
@@ -13,7 +14,11 @@ async function setFollowing(req: Request, res: Response) {
       const newFollowing = await Following.create({
         user_id: user._id, list: [idToFollow]
       })
-      await user.update({followlist_id: newFollowing._id})
+      await User.findByIdAndUpdate(
+        req.headers.userId
+      ,{
+        followlist_id: newFollowing._id
+      })
     } else {
       const list = await Following.findById(user?.followlist_id)
       const alreadyFollow = list?.list.find(item => String(item) === idToFollow)
@@ -35,8 +40,13 @@ async function setFollowing(req: Request, res: Response) {
         foreignField: '_id',
         as: 'followinglist'
       }
+    },{
+      $unset: [
+        'password'
+      ]
     }])
 
+    console.log(updatedUser)
     res.status(200).json({message: 'Successfully following/unfollowing', data: updatedUser})
   } catch(err) {
     console.log(err)

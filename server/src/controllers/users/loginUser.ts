@@ -1,5 +1,4 @@
 import { Request, Response } from 'express'
-import mongoose from 'mongoose'
 import comparePassword from '../../helpers/comparePassword'
 import generateToken from '../../helpers/generateToken'
 import User from '../../models/UserModel'

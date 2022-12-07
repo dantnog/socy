@@ -5,6 +5,8 @@ import Following from '../../models/FollowingModel'
 
 async function fetchFollowing(req: Request, res: Response) {
   const {followlist_id} = req.body
+  if (!followlist_id) return res.status(422).json({message: 'Missing data'})
+
   try {
     const followList = await Following.aggregate([{
       $match: {_id: new mongoose.Types.ObjectId(followlist_id)}

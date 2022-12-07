@@ -1,7 +1,8 @@
 function userReducer(state: any, action:any) {
   switch (action.type) {
     case 'setUser':
-      return {...action.payload[0] || action.payload}
+      delete action.payload.password
+      return action.payload[0] || action.payload
     case 'updateList':
       return {...state, followinglist: action.payload[0].followinglist[0].list || []}
     case 'clear':

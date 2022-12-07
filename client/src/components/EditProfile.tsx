@@ -21,7 +21,7 @@ function EditProfile() {
   async function handleUpdate(e: any) {
     e.preventDefault()
     const res = await validateUpdateUser(form)
-    if (res.status !== 200) return
+    if (res?.status !== 200) return
     dispatch({type: 'setUser', payload: res.data})
     clearInputs()
   }

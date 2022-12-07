@@ -24,7 +24,8 @@ function Following() {
     dispatchFollowing({type: 'set', payload: res.data})
   }
 
-  useEffect(() => {fetchFollowing()}, [])
+  useEffect(() => {fetchFollowing()}, []) // first load
+  useEffect(() => {fetchFollowing()}, [state.followinglist])
   
   
   return (
