@@ -10,20 +10,20 @@ export function usePostsContext() {
   return useContext(PostsContext)
 }
 
-const allPostsBase = {_id: '', message: '', user_id: '', likes: '', likesCount: 0,
-  createdAt: '', updateAt: '', owner: []
+const PostsBase = {_id: '', message: '', user_id: '', likes: [], likesCount: 0,
+  createdAt: '', updateAt: '', owner: {}
 }
 
 export function PostsProvider({children}: {children: ReactNode}) {
-  const [state, dispatch] = useReducer(allPostsReducer, [allPostsBase])
+  const [statePost, dispatchPost] = useReducer(allPostsReducer, [PostsBase])
 
   async function fetchAllPosts() {
     const allPosts = await validateAllPosts()
-    dispatch({type: 'set', payload: allPosts.data})
+    dispatchPost({type: 'set', payload: allPosts.data})
   }
 
   return (
-    <PostsContext.Provider value={{state, dispatch, fetchAllPosts}} >
+    <PostsContext.Provider value={{statePost, dispatchPost, fetchAllPosts}} >
       {children}
     </PostsContext.Provider>
   )

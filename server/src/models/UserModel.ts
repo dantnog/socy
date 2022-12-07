@@ -7,7 +7,8 @@ const schema = new mongoose.Schema({
   email: {type: String, required: true, unique: true, max: 60},
   password: {type: String, required: true},
   picture: {type: String, default: ''},
-  followlist_id: {type: mongoose.Types.ObjectId, require: false}
+  followlist_id: {type: mongoose.Types.ObjectId, require: false},
+  likeslist_id: {type: mongoose.Types.ObjectId, require: false}
 },
 {
   timestamps: true

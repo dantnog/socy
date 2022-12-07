@@ -11,13 +11,13 @@ import ChangeTheme from "../components/ChangeTheme"
 
 
 function LeftBar() {
-  const {state, dispatch} = useUserContext()
+  const {stateUser, dispatchUser} = useUserContext()
   const nav = useNavigate()
 
   async function logout() {
     const res = await validateLogout()
     if (res.status !== 200) return
-    dispatch({type: 'clear'})
+    dispatchUser({type: 'clear'})
     nav('/')
   }
 
@@ -31,8 +31,8 @@ function LeftBar() {
     <div className="space-y-4">
       <div className="flex justify-between place-items-center">
         <div className="flex place-items-center space-x-4">
-          <img src={`${host}/users/${state?.picture}`} alt="Picture" className="h-12 w-12 object-cover rounded-full overflow-hidden bg-gray-100 dark:bg-gray-800" />
-          <h3 className="font-semibold truncate">{state?.name}</h3>
+          <img src={`${host}/users/${stateUser?.picture}`} alt="Picture" className="h-12 w-12 object-cover rounded-full overflow-hidden bg-gray-100 dark:bg-gray-800" />
+          <h3 className="font-semibold truncate">{stateUser?.name}</h3>
         </div>
         <button onClick={logout} className="text-xl hover:text-red-500 hover:bg-gray-200 hover:dark:bg-gray-700 rounded-md p-2 ml-auto">
           <IoExitOutline />
@@ -41,11 +41,11 @@ function LeftBar() {
       <div className="text-sm ">
         <div className="">
           <p className="">Description: </p>
-          <p className="pl-4">{state.description || ''}</p>
+          <p className="pl-4">{stateUser.description || ''}</p>
         </div>
         <div className="">
           <p className="">Location: </p>
-          <p className="pl-4">{state.location || ''}</p>
+          <p className="pl-4">{stateUser.location || ''}</p>
         </div>
       </div>
       <div className="flex rounded-md overflow-hidden">

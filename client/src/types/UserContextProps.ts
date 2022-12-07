@@ -1,6 +1,6 @@
 type UserContextProps = {
-  state: any 
-  dispatch: any
+  stateUser: any 
+  dispatchUser: any
 }
 
 export default UserContextProps

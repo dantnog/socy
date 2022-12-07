@@ -1,6 +1,6 @@
 type PostsContextProps = {
-  state: any 
-  dispatch: any
+  statePost: any 
+  dispatchPost: any
   fetchAllPosts: Function
 }
 

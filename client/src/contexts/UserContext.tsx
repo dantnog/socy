@@ -17,14 +17,14 @@ function firstLoad() {
 
 
 export function UserProvider({children}: {children: ReactNode}) {
-  const [state, dispatch] = useReducer(userReducer, firstLoad())
+  const [stateUser, dispatchUser] = useReducer(userReducer, firstLoad())
 
   useEffect(() => {
-    localStorage.setItem('user', JSON.stringify(state))
-  }, [state])
+    localStorage.setItem('user', JSON.stringify(stateUser))
+  }, [stateUser])
 
   return (
-    <UserContext.Provider value={{state, dispatch}} >
+    <UserContext.Provider value={{stateUser, dispatchUser}} >
       {children}
     </UserContext.Provider>
   )

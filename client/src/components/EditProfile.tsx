@@ -12,7 +12,7 @@ import { useNavigate } from "react-router-dom"
 const formBase = {name: '', description: '', location: '', password: '', confirm: ''}
 
 function EditProfile() {
-  const {dispatch} = useUserContext()
+  const {dispatchUser} = useUserContext()
   const [form, formDispatch] = useReducer(formReducer, formBase)
   const deleteForm = useRef<any>(null)
   const updateForm = useRef<any>(null)
@@ -22,7 +22,7 @@ function EditProfile() {
     e.preventDefault()
     const res = await validateUpdateUser(form)
     if (res?.status !== 200) return
-    dispatch({type: 'setUser', payload: res.data})
+    dispatchUser({type: 'setUser', payload: res.data})
     clearInputs()
   }
 
