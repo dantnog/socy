@@ -1,5 +1,6 @@
 import { createContext, ReactNode, useContext, useReducer } from "react";
 import validateAllPosts from "../hooks/validateAllPosts";
+import validatePersonalPosts from "../hooks/validatePersonalPosts";
 import allPostsReducer from "../reducers/AllPostsReducer";
 import PostsContextProps from "../types/PostsContextProps";
 
@@ -22,8 +23,13 @@ export function PostsProvider({children}: {children: ReactNode}) {
     dispatchPost({type: 'set', payload: allPosts.data})
   }
 
+  async function fetchPersonalPosts() {
+    const allPosts = await validatePersonalPosts()
+    dispatchPost({type: 'set', payload: allPosts.data})
+  }
+
   return (
-    <PostsContext.Provider value={{statePost, dispatchPost, fetchAllPosts}} >
+    <PostsContext.Provider value={{statePost, dispatchPost, fetchAllPosts, fetchPersonalPosts}} >
       {children}
     </PostsContext.Provider>
   )

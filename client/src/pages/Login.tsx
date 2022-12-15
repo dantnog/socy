@@ -11,7 +11,7 @@ import formReducer from "../reducers/FormReducer";
 const formBase = {email: '', password: ''}
 
 function Login() {
-  const {dispatch} = useUserContext()
+  const {dispatchUser} = useUserContext()
   const [form, formDispatch] = useReducer(formReducer, formBase)
   const nav = useNavigate()
 
@@ -19,7 +19,7 @@ function Login() {
     e.preventDefault()
     const res = await validateLogin(form)
     if (res?.status !== 200) return
-    dispatch({type: 'setUser', payload: res.data})
+    dispatchUser({type: 'setUser', payload: res.data})
     formDispatch({type: 'clear'})
     nav('/home')
   }

@@ -12,7 +12,7 @@ import File from "../components/File"
 const formBase = {name: '', email: '', password: '', confirm: '', image: undefined}
 
 function Signup() {
-  const {dispatch} = useUserContext()
+  const {dispatchUser} = useUserContext()
   const [form, formDispatch] = useReducer(formReducer, formBase)
   const nav = useNavigate()
 
@@ -20,7 +20,7 @@ function Signup() {
     e.preventDefault()
     const res = await validateSignup(form)
     if (res?.status !== 201) return
-    dispatch({type: 'setUser', payload: res.data})
+    dispatchUser({type: 'setUser', payload: res.data})
     formDispatch({type: 'clear'})
     nav('/home')
   }
