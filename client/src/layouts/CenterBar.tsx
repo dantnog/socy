@@ -4,10 +4,11 @@ import host from "../api/host"
 import NewPost from '../components/NewPost'
 import validateLike from '../hooks/validateLike'
 import { useUserContext } from '../contexts/UserContext'
+import validateDeletePost from '../hooks/validateDeletePost'
 
 
 function CenterBar() {
-  const {fetchAllPosts, statePost, dispatchPost} = usePostsContext()
+  const {fetchAllPosts, fetchPersonalPosts, statePost, dispatchPost, isPersonalPosts} = usePostsContext()
   const {stateUser, dispatchUser} = useUserContext()
 
   async function handleLike(idToLike: string, localAction: string) {
@@ -15,6 +16,12 @@ function CenterBar() {
     if (res.status !== 200) return
     dispatchUser({type: 'updateLikes', payload: res.data})
     dispatchPost({type: 'updateLikesLocal', payload: [idToLike, localAction]})
+  }
+
+  async function handleDelete(idToDelete: string) {
+    const res = await validateDeletePost(idToDelete)
+    if (res.status !== 200) return
+    fetchPersonalPosts()
   }
 
   useEffect(() => {
@@ -34,20 +41,31 @@ function CenterBar() {
               <p className="text-xs">{item.createdAt.split('T')[0]}</p>
             </div>
             <p className="">{item.message}</p>
-            <button 
-              onClick={() => {
-                if (stateUser.likeslist?.indexOf(item._id) === -1) handleLike(item._id, 'add')
-                else handleLike(item._id, 'sub')
-              }}
-              className="px-2 bg-yellow-300 dark:bg-yellow-700 hover:bg-yellow-400 dark:hover:bg-yellow-600 text-gray-800 dark:text-gray-100 focus:ring-4 ring-yellow-500/50 rounded-md"
-            >
+            <div className="">
+              <button 
+                onClick={() => {
+                  if (stateUser.likeslist?.indexOf(item._id) === -1) handleLike(item._id, 'add')
+                  else handleLike(item._id, 'sub')
+                }}
+                className="px-2 bg-yellow-300 dark:bg-yellow-700 hover:bg-yellow-400 dark:hover:bg-yellow-600 text-gray-800 dark:text-gray-100 focus:ring-4 ring-yellow-500/50 rounded-md"
+              >
+                {
+                  stateUser.likeslist?.indexOf(item._id) === -1
+                  ? 'Like'
+                  : 'Dislike'
+                }
+                {' '+item.likesCount}
+              </button>
+
               {
-                stateUser.likeslist?.indexOf(item._id) === -1
-                ? 'Like'
-                : 'Dislike'
+                isPersonalPosts
+                ? ( <button className="px-2 bg-red-400 dark:bg-red-700 hover:bg-red-500 dark:hover:bg-red-600 text-gray-800 dark:text-gray-100 focus:ring-4 ring-yellow-500/50 rounded-md"
+                  onClick={() => handleDelete(item._id)}>
+                    Delete
+                  </button> )
+                : null
               }
-              {' '+item.likesCount}
-            </button>
+            </div>
           </div>
         ))
       }

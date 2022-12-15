@@ -23,7 +23,6 @@ async function getPersonalPosts(req: Request, res: Response) {
         'owner.updatedAt'
       ]
     }])
-    console.log(allPosts)
     res.status(200).json({message: 'Fetched personal posts', data: allPosts})
   } catch(err) {
     console.log(err)

@@ -1,4 +1,4 @@
-import { useRef, useState } from "react"
+import { useRef } from "react"
 import { useNavigate } from "react-router-dom"
 import Button from "../components/Button"
 import EditProfile from "../components/EditProfile"
@@ -12,9 +12,8 @@ import { usePostsContext } from "../contexts/PostsContext"
 
 
 function LeftBar() {
-  const [isPersonalPosts, setIsPersonalPosts] = useState(false)
   const {stateUser, dispatchUser} = useUserContext()
-  const {fetchPersonalPosts, fetchAllPosts} = usePostsContext()
+  const {fetchPersonalPosts, fetchAllPosts, isPersonalPosts} = usePostsContext()
   const nav = useNavigate()
 
   async function logout() {
@@ -29,15 +28,6 @@ function LeftBar() {
     form.current?.classList.toggle('hidden')
   }
 
-  function handlePersonalPosts() {
-    setIsPersonalPosts(true)
-    fetchPersonalPosts()
-  }
-
-  function handleAllPosts() {
-    setIsPersonalPosts(false)
-    fetchAllPosts()
-  }
 
   return (
     <>
@@ -67,10 +57,10 @@ function LeftBar() {
         </Button>
         <span className="bg-gray-200 dark:bg-gray-700 w-1"></span>
         { !isPersonalPosts
-        ? ( <Button name="My Posts" type="button" theme={3} onClick={handlePersonalPosts} >
+        ? ( <Button name="My Posts" type="button" theme={3} onClick={fetchPersonalPosts} >
             <IoBookOutline className="mr-2 text-lg"/>
           </Button> )
-        : (<Button name="All Posts" type="button" theme={3} onClick={handleAllPosts} >
+        : (<Button name="All Posts" type="button" theme={3} onClick={fetchAllPosts} >
             <IoBookOutline className="mr-2 text-lg"/>
           </Button>)
         }
