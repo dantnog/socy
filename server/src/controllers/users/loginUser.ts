@@ -24,6 +24,13 @@ async function loginUser(req: Request, res: Response) {
         as: 'followinglist'
       }
     },{
+      $lookup: {
+        from: 'likes',
+        localField: 'likeslist_id',
+        foreignField: '_id',
+        as: 'likeslist'
+      }
+    },{
       $unset: [
         'password'
       ]
