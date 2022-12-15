@@ -7,6 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import { useUserContext } from "../contexts/UserContext"
 import formReducer from "../reducers/FormReducer"
 import File from "../components/File"
+import ChangeTheme from "../components/ChangeTheme"
 
 
 const formBase = {name: '', email: '', password: '', confirm: '', image: undefined}
@@ -28,9 +29,12 @@ function Signup() {
   return (
     <div className="w-screen min-h-screen grid place-items-center">
       <form onSubmit={handleSubmit} className="p-4 bg-white dark:bg-gray-900 flex flex-col space-y-4 rounded-lg" encType="mult">
-        <h2 className="text-3xl my-2 text-yellow-300 dark:text-yellow-600 font-semibold">
-          Sign up
-        </h2>
+        <div className="flex justify-between">
+          <h2 className="text-3xl my-2 text-yellow-300 dark:text-yellow-600 font-semibold">
+            Sign up
+          </h2>
+          <ChangeTheme />
+        </div>
         <Input name="name" type="text" placeholder="Your name" 
           value={form.name} onChange={formDispatch} />
         <Input name="email" type="text" placeholder="Your email" 

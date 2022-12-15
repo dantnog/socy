@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import validateLogin from "../hooks/validateLogin";
 import { useUserContext } from "../contexts/UserContext";
 import formReducer from "../reducers/FormReducer";
+import ChangeTheme from "../components/ChangeTheme";
 
 
 const formBase = {email: '', password: ''}
@@ -27,9 +28,12 @@ function Login() {
   return (
     <div className="w-screen min-h-screen grid place-items-center">
       <form onSubmit={handleSubmit} className="p-4 bg-white dark:bg-gray-900 flex flex-col space-y-4 rounded-lg">
-        <h2 className="text-3xl my-2 text-yellow-300 dark:text-yellow-600 font-semibold">
-          Log in
-        </h2>
+        <div className="flex justify-between">
+          <h2 className="text-3xl my-2 text-yellow-300 dark:text-yellow-600 font-semibold">
+            Log in
+          </h2>
+          <ChangeTheme />
+        </div>
         <Input name="email" type="text" placeholder="Your email" 
           value={form.email} onChange={formDispatch} />
         <Input name="password" type="password" placeholder="Your password" 

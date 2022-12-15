@@ -1,9 +1,14 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { IoMoon, IoSunny } from "react-icons/io5";
 import Button from "./Button";
 
 function ChangeTheme() {
-  const [dark, setDark] = useState(false)
+  const [dark, setDark] = useState(() => {
+    if (localStorage.getItem('dark') === 'true') {
+      document.documentElement.classList.add('dark')
+      return true
+    } else return false
+  })
 
   function handleTheme() {
     document.documentElement.classList.toggle('dark')
@@ -13,13 +18,6 @@ function ChangeTheme() {
     setDark(!dark)
   }
 
-  useEffect(() => {
-    const isDark = localStorage.getItem('dark')
-    if (isDark === 'true') {
-      setDark(true)
-      document.documentElement.classList.toggle('dark')
-    }
-  }, [])
 
   return (
     <Button type="button" theme={5} onClick={handleTheme}>

@@ -19,6 +19,7 @@ function Following() {
   }
 
   async function fetchFollowing() {
+    if (!stateUser.followinglist) return
     const res = await validateFetchFollowing(stateUser.followlist_id)
     if (res?.status !== 200) return
     dispatchFollowing({type: 'set', payload: res.data})

@@ -1,4 +1,5 @@
-import { Routes, Route, Navigate } from 'react-router-dom'
+import { useEffect } from 'react'
+import { Routes, Route } from 'react-router-dom'
 import { ToastContainer } from 'react-toastify'
 import { PostsProvider } from './contexts/PostsContext'
 import { UserProvider } from './contexts/UserContext'
@@ -8,10 +9,11 @@ import Signup from './pages/Signup'
 import Welcome from './pages/Welcome'
 
 function App() {
-  function isLogged() {
-    const re = /jwt/g
-    return re.test(document.cookie)
-  }
+  useEffect(() => {
+    if (localStorage.getItem('dark') === 'true') {
+      document.documentElement.classList.add('dark')
+    }
+  }, [])
 
   return (
     <UserProvider>
@@ -20,8 +22,8 @@ function App() {
       <Routes>
         <Route path="/" element={ <Welcome /> } />
         <Route path="/home" element={ <Home /> } />
-        <Route path="/login" element={ !isLogged() ? <Login /> : <Navigate to="/home" /> } />
-        <Route path="/signup" element={ !isLogged() ? <Signup /> : <Navigate to="/home" /> } />
+        <Route path="/login" element={ <Login /> } />
+        <Route path="/signup" element={ <Signup /> } />
       </Routes>
       <ToastContainer />
     </div>

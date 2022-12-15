@@ -10,13 +10,13 @@ const Base: any = []
 
 function SearchUsers() {
   const [stateSearch, dispatchSearch] = useReducer(searchUsersReducer, Base)
-  const {state, dispatch} = useUserContext()
+  const {stateUser, dispatchUser} = useUserContext()
   const [name, setName] = useState('')
 
   async function handleFollowBtn(idToFollow: string) {
     const res = await validateSetFollow(idToFollow)
     if (res.status !== 200) return
-    dispatch({type: 'updateList', payload: res.data})
+    dispatchUser({type: 'updateList', payload: res.data})
   }
 
   async function handleSubmit(e: any) {
@@ -48,7 +48,7 @@ function SearchUsers() {
         </div>
         <button onClick={() => handleFollowBtn(item._id)} className="px-2 bg-yellow-300 dark:bg-yellow-700 hover:bg-yellow-400 dark:hover:bg-yellow-600 text-gray-800 dark:text-gray-100 focus:ring-4 ring-yellow-500/50 rounded-md">
           {
-            state.followinglist?.indexOf(item._id) === -1
+            stateUser.followinglist?.indexOf(item._id) === -1
             ? 'Follow'
             : 'Unfollow'
           }
