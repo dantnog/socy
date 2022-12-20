@@ -7,8 +7,8 @@ import { useState } from "react";
 import Comments from "./Comments";
 
 
-function ProfilePost(item: PostProps) {
-  const {fetchPersonalPosts, dispatchPost, isPersonalPosts} = usePostsContext()
+function ProfilePost({item, posts, setPosts}: {item: PostProps, posts: [], setPosts: Function}) {
+  const {fetchPersonalPosts, isPersonalPosts} = usePostsContext()
   const {stateUser, dispatchUser} = useUserContext()
   const [showComments, setShowComments] = useState(false)
 
@@ -16,7 +16,20 @@ function ProfilePost(item: PostProps) {
     const res = await validateLike(idToLike)
     if (res.status !== 200) return
     dispatchUser({type: 'updateLikes', payload: res.data})
-    dispatchPost({type: 'updateLikesLocal', payload: [idToLike, localAction]})
+    setPosts(() => {
+      // local count
+      return posts.map((each: any) => {
+        if (each._id === idToLike) {
+          if (localAction === 'add') {
+            return {...each, likesCount: each.likesCount + 1}
+          } else {
+            return {...each, likesCount: each.likesCount - 1}
+          }
+        } else {
+          return each 
+        }
+      })
+    })
   }
 
   async function handleDelete(idToDelete: string) {

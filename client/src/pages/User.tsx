@@ -88,7 +88,7 @@ function User() {
       {
         posts?.map((item: any, index: any) => (
           <div key={index} className="p-4 space-y-4 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-md">
-            <ProfilePost {...item}/>
+            <ProfilePost item={item} posts={posts} setPosts={setPosts} />
           </div>
         ))
       }
