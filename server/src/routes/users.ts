@@ -1,6 +1,7 @@
 import express from 'express'
 import deleteUser from '../controllers/users/deleteUser'
 import fetchFollowing from '../controllers/users/fetchFollowing'
+import fetchProfile from '../controllers/users/fetchProfile'
 import loginUser from '../controllers/users/loginUser'
 import logoutUser from '../controllers/users/logoutUser'
 import searchUser from '../controllers/users/searchUser'
@@ -21,5 +22,6 @@ router.delete('/delete', auth, deleteUser)
 router.post('/search', auth, searchUser)
 router.post('/fetchfollowing', auth, fetchFollowing)
 router.post('/setfollowing', auth, setFollowing)
+router.get('/profile/:id', auth, fetchProfile)
 
 export default router

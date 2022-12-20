@@ -6,6 +6,7 @@ import { UserProvider } from './contexts/UserContext'
 import Home from './pages/Home'
 import Login from './pages/Login'
 import Signup from './pages/Signup'
+import User from './pages/User'
 import Welcome from './pages/Welcome'
 
 function App() {
@@ -24,6 +25,7 @@ function App() {
         <Route path="/home" element={ <Home /> } />
         <Route path="/login" element={ <Login /> } />
         <Route path="/signup" element={ <Signup /> } />
+        <Route path="/user/:id" element={ <User /> } />
       </Routes>
       <ToastContainer />
     </div>
