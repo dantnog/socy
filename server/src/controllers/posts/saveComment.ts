@@ -56,8 +56,20 @@ async function saveComment(req: Request, res: Response) {
           foreignField: '_id',
           as: 'owner'
         }
+      },{
+        $unset: [
+          'owner.email',
+          'owner.password',
+          'owner.createdAt',
+          'owner.updatedAt',
+          'owner.followlist_id',
+          'owner.likeslist_id',
+          'owner.location',
+          'owner.description',
+        ]
       }
-    ])
+    ]).limit(1)
+
     console.log(comments)
     res.status(201).json({message: 'Comment saved', data: comments})
   } catch(err) {

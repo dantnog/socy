@@ -14,18 +14,21 @@ function Comments({comments_id, post_id}: {comments_id: string, post_id: string}
   const [state, dispatch] = useReducer(newCommentReducer, base)
   const [allComments, setAllComments] = useState({})
 
-  async function fetchAllComments() {
-    const res = await validateAllComments(comments_id)
-    if (res?.status !== 200) return 
-    const newRes = {...res.comments[0]}
-    // joining owner with their comments
-    newRes.comments = newRes.comments.map((comm: any) => {
+  function joinCommentWithOwner(newRes: any) {
+    return newRes.comments.map((comm: any) => {
       for(let owner of newRes.owner) {
         if (comm.user_id === owner._id) {
           return { ...owner,...comm}
         }
       }
     })
+  }
+
+  async function fetchAllComments() {
+    const res = await validateAllComments(comments_id)
+    if (res?.status !== 200) return 
+    const newRes = {...res.comments[0]}
+    newRes.comments = joinCommentWithOwner(newRes)
     setAllComments(newRes)
   }
 
@@ -33,7 +36,9 @@ function Comments({comments_id, post_id}: {comments_id: string, post_id: string}
     e.preventDefault()
     const res = await validateNewComment(state.comment, post_id)
     if (res?.status !== 201) return
-    setAllComments(res.comments)
+    const newRes = {...res.comments[0]}
+    newRes.comments = joinCommentWithOwner(newRes)
+    setAllComments(newRes)
     dispatch({type: 'clear'})
   }
 
