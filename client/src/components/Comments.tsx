@@ -6,11 +6,13 @@ import host from '../api/host'
 import { Link } from 'react-router-dom'
 import validateDeleteComment from '../hooks/validateDeleteComment'
 import { HiOutlineTrash } from 'react-icons/hi2'
+import { usePostsContext } from '../contexts/PostsContext'
 
 
 const base = {comment: ''}
 
 function Comments({comments_id, post_id}: {comments_id: string, post_id: string}) {
+  const {dispatchPost} = usePostsContext()
   const [state, dispatch] = useReducer(newCommentReducer, base)
   const [allComments, setAllComments] = useState({})
 
@@ -40,6 +42,7 @@ function Comments({comments_id, post_id}: {comments_id: string, post_id: string}
     newRes.comments = joinCommentWithOwner(newRes)
     setAllComments(newRes)
     dispatch({type: 'clear'})
+    dispatchPost({type: 'updateCommentsLocal', payload: [post_id, 'add']})
   }
 
   async function handleDeleteComment(specific_id: string) {
@@ -48,6 +51,7 @@ function Comments({comments_id, post_id}: {comments_id: string, post_id: string}
     // locally delete comment
     const newList = allComments.comments.filter(item => item._id !== specific_id)
     setAllComments({...allComments, comments: newList})
+    dispatchPost({type: 'updateCommentsLocal', payload: [post_id, 'sub']})
   }
 
   useEffect(() => {
