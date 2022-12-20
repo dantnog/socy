@@ -37,7 +37,7 @@ function User() {
 
   useEffect(() => {
     id ? fetchProfileData(id) : null
-  }, [])
+  }, [id])
 
   return (
     <div className="h-screen max-w-3xl mx-auto overflow-y-scroll">
