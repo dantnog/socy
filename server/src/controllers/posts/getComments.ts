@@ -21,7 +21,11 @@ async function getComments(req: Request, res: Response) {
         'owner.email',
         'owner.password',
         'owner.createdAt',
-        'owner.updatedAt'
+        'owner.updatedAt',
+        'owner.followlist_id',
+        'owner.likeslist_id',
+        'owner.location',
+        'owner.description',
       ]
     }]).limit(1)
 
