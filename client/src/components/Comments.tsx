@@ -15,7 +15,6 @@ function Comments({comments_id, post_id}: {comments_id: string, post_id: string}
   async function fetchAllComments() {
     const res = await validateAllComments(comments_id)
     if (res?.status !== 200) return 
-    console.log(res)
     setAllComments(res.comments)
   }
 

@@ -1,6 +1,4 @@
-import { Link } from "react-router-dom";
 import PostProps from "../types/PostProps";
-import host from "../api/host";
 import validateLike from "../hooks/validateLike";
 import { useUserContext } from "../contexts/UserContext";
 import { usePostsContext } from "../contexts/PostsContext";
@@ -9,7 +7,7 @@ import { useState } from "react";
 import Comments from "./Comments";
 
 
-function Post(item: PostProps) {
+function ProfilePost(item: PostProps) {
   const {fetchPersonalPosts, dispatchPost, isPersonalPosts} = usePostsContext()
   const {stateUser, dispatchUser} = useUserContext()
   const [showComments, setShowComments] = useState(false)
@@ -30,11 +28,7 @@ function Post(item: PostProps) {
   return (
     <>
       <div className="flex space-x-4 place-items-center">
-        <img src={`${host}/users/${item.owner[0]?.picture}`} alt="Picture" className="h-12 w-12 object-cover rounded-full overflow-hidden bg-gray-100 dark:bg-gray-800" />
-        <Link to={`/user/${item.owner[0]?._id}`}>
-          <h3 className="font-semibold truncate">{item.owner[0]?.name}</h3>
-        </Link>
-        <p className="text-xs">{item.createdAt.split('T')[0]}</p>
+        <p className="">Post from: {item.createdAt.split('T')[0]}</p>
       </div>
       <p className="">{item.message}</p>
       <div className="space-x-2">
@@ -81,4 +75,4 @@ function Post(item: PostProps) {
   )
 }
 
-export default Post
+export default ProfilePost

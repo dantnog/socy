@@ -3,18 +3,15 @@ import { IoExitOutline, IoReturnUpBack } from 'react-icons/io5'
 import validateLogout from "../hooks/validateLogout"
 import { Link, useNavigate, useParams } from "react-router-dom"
 import host from "../api/host"
-import { usePostsContext } from "../contexts/PostsContext"
-import validateLike from "../hooks/validateLike"
-import validateDeletePost from "../hooks/validateDeletePost"
 import Button from "../components/Button"
 import { useEffect, useRef, useState } from "react"
 import validateProfileData from "../hooks/validateProfileData"
+import ProfilePost from "../components/ProfilePost"
 
 
 function User() {
   const {stateUser, dispatchUser} = useUserContext()
-  const {statePost, dispatchPost, fetchPersonalPosts, isPersonalPosts} = usePostsContext()
-  const [profile, setProfile] = useState({})
+  const [profile, setProfile] = useState<any>({_id: '', name: '', description: '', picture: '', location: '', email: ''})
   const [posts, setPosts] = useState([])
   const nav = useNavigate()
   const {id} = useParams()
@@ -23,22 +20,8 @@ function User() {
   async function fetchProfileData(id: string) {
     const res = await validateProfileData(id)
     if (res.status !== 200) return
-    console.log(res.data)
     setProfile(res.data.profile)
     setPosts(res.data.posts)
-  }
-
-  async function handleLike(idToLike: string, localAction: string) {
-    const res = await validateLike(idToLike)
-    if (res.status !== 200) return
-    dispatchUser({type: 'updateLikes', payload: res.data})
-    dispatchPost({type: 'updateLikesLocal', payload: [idToLike, localAction]})
-  }
-
-  async function handleDelete(idToDelete: string) {
-    const res = await validateDeletePost(idToDelete)
-    if (res.status !== 200) return
-    fetchPersonalPosts()
   }
 
   async function logout() {
@@ -95,43 +78,17 @@ function User() {
           <p className="">Location: </p>
           <p className="">{profile.location || ''}</p>
         </div>
+        <div className="">
+          <p className="">Email: </p>
+          <p className="">{profile?.email || ''}</p>
+        </div>
       </div>
 
       <div className="my-4 px-4 ">
       {
         posts?.map((item: any, index: any) => (
           <div key={index} className="p-4 space-y-4 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-md">
-            <div className="flex space-x-4 place-items-center">
-              <img src={`${host}/users/${profile?.picture}`} alt="Picture" className="h-12 w-12 object-cover rounded-full overflow-hidden bg-gray-100 dark:bg-gray-800" />
-              <h3 className="font-semibold truncate">{profile?.name}</h3>
-              <p className="text-xs">{item.createdAt.split('T')[0]}</p>
-            </div>
-            <p className="">{item.message}</p>
-            <div className="">
-              <button 
-                onClick={() => {
-                  if (stateUser.likeslist?.indexOf(item._id) === -1) handleLike(item._id, 'add')
-                  else handleLike(item._id, 'sub')
-                }}
-                className="px-2 bg-yellow-300 dark:bg-yellow-700 hover:bg-yellow-400 dark:hover:bg-yellow-600 text-gray-800 dark:text-gray-100 focus:ring-4 ring-yellow-500/50 rounded-md"
-              >
-                {
-                  stateUser.likeslist?.indexOf(item._id) === -1
-                  ? 'Like'
-                  : 'Dislike'
-                }
-                {' '+item.likesCount}
-              </button>
-
-              {
-                stateUser._id === profile._id
-                ? ( <button className="px-2 ml-4 bg-red-400 dark:bg-red-700 hover:bg-red-500 dark:hover:bg-red-600 text-gray-800 dark:text-gray-100 focus:ring-4 ring-yellow-500/50 rounded-md"
-                  onClick={() => handleDelete(item._id)}>
-                    Delete
-                  </button> )
-                : null
-              }
-            </div>
+            <ProfilePost {...item}/>
           </div>
         ))
       }
