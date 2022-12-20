@@ -1,5 +1,5 @@
 type PostProps = {
-	_id: any
+	_id: string
 	message: string
 	likes: []
 	likesCount: number 
@@ -9,6 +9,8 @@ type PostProps = {
 		name: string 
 		picture: string
 	}]
+	comments_id: string
+	commentsCount: number
 }
 
 export default PostProps

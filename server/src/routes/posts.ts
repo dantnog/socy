@@ -5,6 +5,8 @@ import getAllPosts from '../controllers/posts/getAllPosts'
 import setLikes from '../controllers/posts/setLikes'
 import getPersonalPosts from '../controllers/posts/getPersonalPosts'
 import deletePost from '../controllers/posts/deletePost'
+import saveComment from '../controllers/posts/saveComment'
+import getComments from '../controllers/posts/getComments'
 
 
 const router = express.Router()
@@ -14,5 +16,7 @@ router.get('/all', auth, getAllPosts)
 router.get('/personal', auth, getPersonalPosts)
 router.post('/setlike', auth, setLikes)
 router.delete('/delete/:idToDelete', auth, deletePost)
+router.post('/comments', auth, saveComment)
+router.get('/comments/:commentsId', auth, getComments)
 
 export default router
