@@ -39,6 +39,8 @@ async function loginUser(req: Request, res: Response) {
     const token = generateToken(String(user._id))
     res.cookie('jwt', token)
     res.status(200).json({message: 'Logged in successfully', data: updatedUser})
+
+    console.log(`[${new Date(Date.now()).toLocaleTimeString()}] [USER LOGIN] Complete. Returning User.`)
   } catch(err) {
     console.log(err)
     res.status(500).json({message: 'Failed to login'})

@@ -4,9 +4,9 @@ function userReducer(stateUser: any, action:any) {
       delete action.payload.password
       return action.payload[0] || action.payload
     case 'updateList':
-      return {...stateUser, followinglist: action.payload[0].followinglist[0].list || []}
+      return {...stateUser, followinglist: action.payload || []}
     case 'updateLikes':
-      return {...stateUser, likeslist: action.payload[0].likeslist[0].list || []}
+      return {...stateUser, likeslist: action.payload || []}
     case 'clear':
       return {logged: false}
     default:

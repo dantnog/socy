@@ -2,9 +2,9 @@ import PostProps from "../types/PostProps";
 import validateLike from "../hooks/validateLike";
 import { useUserContext } from "../contexts/UserContext";
 import { usePostsContext } from "../contexts/PostsContext";
-import validateDeletePost from "../hooks/validateDeletePost";
 import { useState } from "react";
 import Comments from "./Comments";
+import ValidatePosts from "../hooks/validatePosts";
 
 
 function ProfilePost({item, posts, setPosts}: {item: PostProps, posts: [], setPosts: Function}) {
@@ -33,8 +33,8 @@ function ProfilePost({item, posts, setPosts}: {item: PostProps, posts: [], setPo
   }
 
   async function handleDelete(idToDelete: string) {
-    const res = await validateDeletePost(idToDelete)
-    if (res.status !== 200) return
+    const res = await ValidatePosts.delete(idToDelete)
+    if (!res) return
     fetchPersonalPosts()
   }
 

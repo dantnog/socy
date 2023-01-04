@@ -1,6 +1,6 @@
 import { useReducer } from 'react'
 import { usePostsContext } from '../contexts/PostsContext'
-import validateNewPost from '../hooks/validateNewPost'
+import ValidatePosts from '../hooks/validatePosts'
 import PostReducer from '../reducers/NewPostReducer'
 
 const PostBase = {message: ''}
@@ -11,9 +11,9 @@ function NewPost() {
 
   async function handleSubmit(e: any) {
     e.preventDefault()
-    const res = await validateNewPost(state)
-    if (!res?.data) return
-    fetchAllPosts() // to reload
+    const res = await ValidatePosts.create(state.message)
+    if (!res) return
+    fetchAllPosts()
   }
 
   return(

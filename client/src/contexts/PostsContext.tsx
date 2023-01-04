@@ -1,6 +1,5 @@
 import { createContext, ReactNode, useContext, useReducer, useState } from "react";
-import validateAllPosts from "../hooks/validateAllPosts";
-import validatePersonalPosts from "../hooks/validatePersonalPosts";
+import ValidatePosts from "../hooks/validatePosts";
 import allPostsReducer from "../reducers/AllPostsReducer";
 import PostsContextProps from "../types/PostsContextProps";
 
@@ -20,16 +19,16 @@ export function PostsProvider({children}: {children: ReactNode}) {
   const [isPersonalPosts, setIsPersonalPosts] = useState(false)
 
   async function fetchAllPosts() {
-    const allPosts = await validateAllPosts()
-    if (allPosts.status !== 200) return
-    dispatchPost({type: 'set', payload: allPosts.data})
+    const data = await ValidatePosts.fetchAll()
+    if (!data) return
+    dispatchPost({type: 'set', payload: data})
     setIsPersonalPosts(false)
   }
 
   async function fetchPersonalPosts() {
-    const allPosts = await validatePersonalPosts()
-    if (allPosts.status !== 200) return
-    dispatchPost({type: 'set', payload: allPosts.data})
+    const data = await ValidatePosts.fetchPersonal()
+    if (!data) return
+    dispatchPost({type: 'set', payload: data})
     setIsPersonalPosts(true)
   }
 

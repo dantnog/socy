@@ -24,6 +24,8 @@ async function getPersonalPosts(req: Request, res: Response) {
       ]
     }])
     res.status(200).json({message: 'Fetched personal posts', data: allPosts})
+
+    console.log(`[${new Date(Date.now()).toLocaleTimeString()}] [POST GET PERSONAL] Complete. Returning posts.`)
   } catch(err) {
     console.log(err)
     res.status(500).json({message: 'Failed to fetch personal posts\nTry again later'})

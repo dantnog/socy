@@ -30,6 +30,8 @@ async function getComments(req: Request, res: Response) {
     }]).limit(1)
 
     res.status(200).json({message: 'Successfully fetched comments', data: comments})
+
+    console.log(`[${new Date(Date.now()).toLocaleTimeString()}] [COMMENTS FETCH] Complete. Returning comments.`)
   } catch(err) {
     console.log(err)
     res.status(500).json({message: 'Failed to fetch the comments\nTry again later'})

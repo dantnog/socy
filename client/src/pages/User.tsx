@@ -1,12 +1,12 @@
 import { useUserContext } from "../contexts/UserContext"
 import { IoExitOutline, IoReturnUpBack } from 'react-icons/io5' 
-import validateLogout from "../hooks/validateLogout"
 import { Link, useNavigate, useParams } from "react-router-dom"
 import host from "../api/host"
 import Button from "../components/Button"
 import { useEffect, useRef, useState } from "react"
-import validateProfileData from "../hooks/validateProfileData"
 import ProfilePost from "../components/ProfilePost"
+import ValidateAuth from "../hooks/validateAuth"
+import UsersApi from "../api/usersApi"
 
 
 function User() {
@@ -18,15 +18,15 @@ function User() {
   const imageDialog = useRef(null)
 
   async function fetchProfileData(id: string) {
-    const res = await validateProfileData(id)
-    if (res.status !== 200) return
-    setProfile(res.data.profile)
-    setPosts(res.data.posts)
+    const data = await UsersApi.fetchProfileData(id)
+    if (!data.data) return
+    setProfile(data.data.profile)
+    setPosts(data.data.posts)
   }
 
   async function logout() {
-    const res = await validateLogout()
-    if (res.status !== 200) return
+    const res = await ValidateAuth.logout()
+    if (!res) return
     dispatchUser({type: 'clear'})
     nav('/')
   }

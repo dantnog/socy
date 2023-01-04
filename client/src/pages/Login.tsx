@@ -3,10 +3,10 @@ import { Link } from "react-router-dom"
 import Button from "../components/Button"
 import Input from "../components/Input"
 import { useNavigate } from 'react-router-dom';
-import validateLogin from "../hooks/validateLogin";
 import { useUserContext } from "../contexts/UserContext";
 import formReducer from "../reducers/FormReducer";
 import ChangeTheme from "../components/ChangeTheme";
+import ValidateAuth from "../hooks/validateAuth";
 
 
 const formBase = {email: '', password: ''}
@@ -18,9 +18,9 @@ function Login() {
 
   async function handleSubmit(e: any) {
     e.preventDefault()
-    const res = await validateLogin(form)
-    if (res?.status !== 200) return
-    dispatchUser({type: 'setUser', payload: res.data})
+    const data = await ValidateAuth.login(form)
+    if (!data) return
+    dispatchUser({type: 'setUser', payload: data})
     formDispatch({type: 'clear'})
     nav('/home')
   }

@@ -16,6 +16,8 @@ async function fetchProfile(req: Request, res: Response) {
     })
 
     res.status(200).json({message: 'Fetch profile complete', data: {profile, posts}})
+
+    console.log(`[${new Date(Date.now()).toLocaleTimeString()}] [USER FETCH PROFILE] Complete. Returning User and Posts.`)
   } catch(err) {
     console.log(err)
     res.status(500).json({message: 'Failed to fetch profile data\nTry again later'})

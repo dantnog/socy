@@ -13,6 +13,8 @@ async function deleteUser(req: Request, res: Response) {
     user?.followlist_id ? await Following.findByIdAndDelete(user.followlist_id) : null
     res.clearCookie('jwt')
     res.status(200).json({message: 'Account deleted'})
+
+    console.log(`[${new Date(Date.now()).toLocaleTimeString()}] [USER DELETE] Complete.`)
   } catch(err) {
     console.log(err)
     res.status(500).json({message: 'Failed to delete user\nTry again later'})

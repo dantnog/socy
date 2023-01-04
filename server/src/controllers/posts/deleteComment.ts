@@ -36,6 +36,8 @@ async function deleteComment(req: Request, res: Response) {
     })
 
     res.status(200).json({message: 'Comment deleted'})
+
+    console.log(`[${new Date(Date.now()).toLocaleTimeString()}] [COMMENT DELETE] Complete.`)
   } catch(err) {
     console.log(err)
     res.status(500).json({message: 'Failed to delete post\nTry again later'})

@@ -3,12 +3,12 @@ import { useNavigate } from "react-router-dom"
 import Button from "../components/Button"
 import EditProfile from "../components/EditProfile"
 import { useUserContext } from "../contexts/UserContext"
-import validateLogout from "../hooks/validateLogout"
 import { IoExitOutline, IoBookOutline } from 'react-icons/io5' 
 import { FiEdit } from 'react-icons/fi' 
 import host from "../api/host"
 import ChangeTheme from "../components/ChangeTheme"
 import { usePostsContext } from "../contexts/PostsContext"
+import ValidateAuth from "../hooks/validateAuth"
 
 
 function LeftBar() {
@@ -17,8 +17,8 @@ function LeftBar() {
   const nav = useNavigate()
 
   async function logout() {
-    const res = await validateLogout()
-    if (res.status !== 200) return
+    const res = await ValidateAuth.logout()
+    if (!res) return
     dispatchUser({type: 'clear'})
     nav('/')
   }

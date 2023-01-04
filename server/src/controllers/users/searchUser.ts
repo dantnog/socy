@@ -10,6 +10,8 @@ async function searchUser(req: Request, res: Response) {
       .select('-password -createdAt -updatedAt -description -location -email')
       .limit(50)
     res.status(200).json({message: 'User search complete', data: users})
+    
+    console.log(`[${new Date(Date.now()).toLocaleTimeString()}] [USER SEARCH] Complete. Returning search.`)
   } catch(err) {
     console.log(err)
     res.status(500).json({message: 'Failed to search for user\nTry again later'})

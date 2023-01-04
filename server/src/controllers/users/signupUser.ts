@@ -24,6 +24,8 @@ async function signupUser(req: Request, res: Response) {
     const token = generateToken(String(user._id))
     res.cookie('jwt', token)
     res.status(201).json({message: 'Sign up complete', data: user})
+
+    console.log(`[${new Date(Date.now()).toLocaleTimeString()}] [SIGNUP USER] Complete. Returning User.`)
   } catch(err) {
     console.log(err)
     res.status(500).json({message: 'Failed to signup\nTry again later'})

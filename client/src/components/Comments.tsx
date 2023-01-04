@@ -1,13 +1,11 @@
 import { useEffect, useReducer, useState } from 'react'
-import validateNewComment from '../hooks/validateNewComment'
-import validateAllComments from '../hooks/validateAllComments'
 import newCommentReducer from '../reducers/newCommentReducer'
 import host from '../api/host'
 import { Link } from 'react-router-dom'
-import validateDeleteComment from '../hooks/validateDeleteComment'
 import { HiOutlineTrash } from 'react-icons/hi2'
 import { usePostsContext } from '../contexts/PostsContext'
 import { useUserContext } from '../contexts/UserContext'
+import ValidateComments from '../hooks/validateComments'
 
 
 const base = {comment: ''}
@@ -18,9 +16,9 @@ function Comments({comments_id, post_id}: {comments_id: string, post_id: string}
   const [state, dispatch] = useReducer(newCommentReducer, base)
   const [allComments, setAllComments] = useState({})
 
-  function joinCommentWithOwner(newRes: any) {
-    return newRes.comments.map((comm: any) => {
-      for(let owner of newRes.owner) {
+  function joinCommentWithOwner(data: any) {
+    return data.comments.map((comm: any) => {
+      for(let owner of data.owner) {
         if (comm.user_id === owner._id) {
           return { ...owner,...comm}
         }
@@ -29,27 +27,25 @@ function Comments({comments_id, post_id}: {comments_id: string, post_id: string}
   }
 
   async function fetchAllComments() {
-    const res = await validateAllComments(comments_id)
-    if (res?.status !== 200) return 
-    const newRes = {...res.comments[0]}
-    newRes.comments = joinCommentWithOwner(newRes)
-    setAllComments(newRes)
+    let data = await ValidateComments.fetch(comments_id)
+    if (!data) return 
+    data.comments = joinCommentWithOwner(data)
+    setAllComments(data)
   }
 
   async function handleSubmitComment(e: any) {
     e.preventDefault()
-    const res = await validateNewComment(state.comment, post_id)
-    if (res?.status !== 201) return
-    const newRes = {...res.comments[0]}
-    newRes.comments = joinCommentWithOwner(newRes)
-    setAllComments(newRes)
+    const data = await ValidateComments.create(state.comment, post_id)
+    if (!data) return
+    data.comments = joinCommentWithOwner(data)
+    setAllComments(data)
     dispatch({type: 'clear'})
     dispatchPost({type: 'updateCommentsLocal', payload: [post_id, 'add']})
   }
 
   async function handleDeleteComment(specific_id: string) {
-    const res = await validateDeleteComment(allComments?._id, specific_id)
-    if (res?.status !== 200) return
+    const data = await ValidateComments.remove(allComments?._id, specific_id)
+    if (!data) return
     // locally delete comment
     const newList = allComments.comments.filter(item => item._id !== specific_id)
     setAllComments({...allComments, comments: newList})

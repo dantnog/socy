@@ -72,6 +72,8 @@ async function saveComment(req: Request, res: Response) {
 
     console.log(comments)
     res.status(201).json({message: 'Comment saved', data: comments})
+
+    console.log(`[${new Date(Date.now()).toLocaleTimeString()}] [COMMENT SAVE] Complete. Returning comments.`)
   } catch(err) {
     console.log(err)
     res.status(500).json({message: 'Failed to save the comment\nTry again later'})

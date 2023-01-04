@@ -25,6 +25,8 @@ async function updateUser(req: Request, res: Response) {
     const newUser = await User.findByIdAndUpdate(id, toUpdate ,{new: true})
     newUser ? newUser.password = 'null' : null
     res.status(200).json({message: 'Update complete', data: newUser})
+
+    console.log(`[${new Date(Date.now()).toLocaleTimeString()}] [USER SIGNUP] Complete. Returning User.`)
   } catch(err) {
     console.log(err)
     res.status(500).json({message: 'Failed to update\nTry again later'})

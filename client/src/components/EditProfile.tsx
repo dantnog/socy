@@ -1,13 +1,12 @@
 import { useReducer, useRef } from "react"
 import { useUserContext } from "../contexts/UserContext"
-import validateUpdateUser from "../hooks/validateUpdateUser"
 import formReducer from "../reducers/FormReducer"
 import Button from "./Button"
 import File from "./File"
 import Input from "./Input"
 import { HiOutlineTrash } from 'react-icons/hi2'
-import validateDeleteUser from "../hooks/validateDeleteUser"
 import { useNavigate } from "react-router-dom"
+import ValidateAuth from "../hooks/validateAuth"
 
 const formBase = {name: '', description: '', location: '', password: '', confirm: ''}
 
@@ -20,9 +19,9 @@ function EditProfile() {
 
   async function handleUpdate(e: any) {
     e.preventDefault()
-    const res = await validateUpdateUser(form)
-    if (res?.status !== 200) return
-    dispatchUser({type: 'setUser', payload: res.data})
+    const data = await ValidateAuth.update(form)
+    if (!data) return
+    dispatchUser({type: 'setUser', payload: data})
     clearInputs()
   }
 
@@ -33,8 +32,8 @@ function EditProfile() {
 
   async function handleDelete(e: any) {
     e.preventDefault()
-    const res = await validateDeleteUser()
-    if (res.status !== 200) return  
+    const res = await ValidateAuth.delete()
+    if (!res) return
     clearInputs()
     nav('/')
   }

@@ -4,9 +4,9 @@ import host from "../api/host";
 import validateLike from "../hooks/validateLike";
 import { useUserContext } from "../contexts/UserContext";
 import { usePostsContext } from "../contexts/PostsContext";
-import validateDeletePost from "../hooks/validateDeletePost";
 import { useState } from "react";
 import Comments from "./Comments";
+import ValidatePosts from "../hooks/validatePosts";
 
 
 function Post(item: PostProps) {
@@ -15,15 +15,15 @@ function Post(item: PostProps) {
   const [showComments, setShowComments] = useState(false)
 
   async function handleLike(idToLike: string, localAction: string) {
-    const res = await validateLike(idToLike)
-    if (res.status !== 200) return
-    dispatchUser({type: 'updateLikes', payload: res.data})
+    const data = await validateLike(idToLike)
+    if (!data) return
+    dispatchUser({type: 'updateLikes', payload: data})
     dispatchPost({type: 'updateLikesLocal', payload: [idToLike, localAction]})
   }
 
   async function handleDelete(idToDelete: string) {
-    const res = await validateDeletePost(idToDelete)
-    if (res.status !== 200) return
+    const res = await ValidatePosts.delete(idToDelete)
+    if (!res) return
     fetchPersonalPosts()
   }
 

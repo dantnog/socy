@@ -83,6 +83,8 @@ async function setLikes(req: Request, res: Response) {
     }])
 
     res.status(200).json({message: 'Successfully like/dislike', data: updatedUser})
+
+    console.log(`[${new Date(Date.now()).toLocaleTimeString()}] [LIKE SET] Complete. Returning updated user.`)
   } catch(err) {
     console.log(err)
     res.status(500).json({message: 'Failed to like/dislike\nTry again later'})

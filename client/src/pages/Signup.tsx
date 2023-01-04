@@ -2,12 +2,12 @@ import { useReducer, useState } from "react"
 import { Link } from "react-router-dom"
 import Button from "../components/Button"
 import Input from "../components/Input"
-import validateSignup from "../hooks/validateSignup"
 import { useNavigate } from 'react-router-dom';
 import { useUserContext } from "../contexts/UserContext"
 import formReducer from "../reducers/FormReducer"
 import File from "../components/File"
 import ChangeTheme from "../components/ChangeTheme"
+import ValidateAuth from "../hooks/validateAuth"
 
 
 const formBase = {name: '', email: '', password: '', confirm: '', image: undefined}
@@ -19,9 +19,9 @@ function Signup() {
 
   async function handleSubmit(e: any) {
     e.preventDefault()
-    const res = await validateSignup(form)
-    if (res?.status !== 201) return
-    dispatchUser({type: 'setUser', payload: res.data})
+    const data = await ValidateAuth.signup(form)
+    if (!data) return
+    dispatchUser({type: 'setUser', payload: data})
     formDispatch({type: 'clear'})
     nav('/home')
   }

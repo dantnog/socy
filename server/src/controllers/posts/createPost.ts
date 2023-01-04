@@ -17,6 +17,8 @@ async function createPost(req: Request, res: Response) {
     const post = await Post.create(toCreate)
     //const posts = await Post.find()
     res.status(201).json({message: 'Post created', data: post})
+
+    console.log(`[${new Date(Date.now()).toLocaleTimeString()}] [POST CREATE] Complete. Returning post.`)
   } catch(err) {
     console.log(err)
     res.status(500).json({message: 'Failed to create post\nTry again later'})

@@ -5,14 +5,16 @@ import User from '../../models/UserModel'
 
 async function setFollowing(req: Request, res: Response) {
   const {idToFollow} = req.body
-  if (!idToFollow) return res.status(422).json({message: 'Missing data'})
+  if (!idToFollow) return res.status(400).json({message: 'Missing data'})
 
   try {
     const user = await User.findById(req.headers.userId)
+    if (!user) return res.status(404).json({message: 'User not found'})
+
     if (user && !user.followlist_id) {
       // first following
       const newFollowing = await Following.create({
-        user_id: user._id, list: [idToFollow]
+        user_id: new mongoose.Types.ObjectId(user._id), list: [idToFollow]
       })
       await User.findByIdAndUpdate(
         req.headers.userId
@@ -46,7 +48,8 @@ async function setFollowing(req: Request, res: Response) {
       ]
     }])
 
-    console.log(updatedUser)
+    console.log(`[${new Date(Date.now()).toLocaleTimeString()}] [SET FOLLOWING] Complete. Returning updated User.`)
+
     res.status(200).json({message: 'Successfully following/unfollowing', data: updatedUser})
   } catch(err) {
     console.log(err)
