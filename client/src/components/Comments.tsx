@@ -7,11 +7,13 @@ import { Link } from 'react-router-dom'
 import validateDeleteComment from '../hooks/validateDeleteComment'
 import { HiOutlineTrash } from 'react-icons/hi2'
 import { usePostsContext } from '../contexts/PostsContext'
+import { useUserContext } from '../contexts/UserContext'
 
 
 const base = {comment: ''}
 
 function Comments({comments_id, post_id}: {comments_id: string, post_id: string}) {
+  const {stateUser} = useUserContext()
   const {dispatchPost} = usePostsContext()
   const [state, dispatch] = useReducer(newCommentReducer, base)
   const [allComments, setAllComments] = useState({})
@@ -87,9 +89,12 @@ function Comments({comments_id, post_id}: {comments_id: string, post_id: string}
               </div>
             </div>
 
-            <button onClick={() => handleDeleteComment(item._id)} className="text-xl hover:text-red-500 hover:bg-gray-200 hover:dark:bg-gray-700 rounded-md p-2">
-              <HiOutlineTrash />
-            </button>
+            {
+              item.user_id === stateUser._id
+              ? (<button onClick={() => handleDeleteComment(item._id)} className="text-xl hover:text-red-500 hover:bg-gray-200 hover:dark:bg-gray-700 rounded-md p-2">
+                <HiOutlineTrash />
+              </button> ) : null
+            }
           </div>
         ))
       }

@@ -8,13 +8,27 @@ async function deleteComment(req: Request, res: Response) {
   const {commentId, idToDelete} = req.params
 
   try {
-    const comment = await Comment.findByIdAndUpdate(
+    const comment = await Comment.findById(commentId)
+    if (!comment) return res.status(404).json({message: 'Not found'})
+
+    let realOwner = false
+    let comments = Object(comment.comments)
+    for (let each of comments) {
+      if (String(each._id) === idToDelete && String(each.user_id) === req.headers.userId) {
+        realOwner = true
+        break
+      }
+    }
+    if (!realOwner) return res.status(403).json({message: 'Permission denied'}) 
+
+    await Comment.findByIdAndUpdate(
       commentId,
       {
         $pull: {
           comments: {_id: new mongoose.Types.ObjectId(idToDelete)}
         }
-      })
+      }
+    )
 
     const post = await Post.findById(comment?.post_id)
     await post?.update({
